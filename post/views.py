@@ -14,6 +14,7 @@ class TwitViewSet(viewsets.ModelViewSet):
     queryset = Twit.objects.all()
     serializer_class = TwitSerializer
     authentication_classes = [authentication.TokenAuthentication, ]
+    permission_classes = [IsAuthenticatedOrReadOnly | IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -23,6 +24,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = TwitSerializer
     authentication_classes = [authentication.TokenAuthentication, ]
+    permission_classes = [IsAuthenticatedOrReadOnly | IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
